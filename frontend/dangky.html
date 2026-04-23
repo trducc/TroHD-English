@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TroHD - Sign Up</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    <nav class="navbar navbar-expand bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="images/logo.png" alt="TroHD" height="40">
+            </a>
+            <div class="navbar-collapse">
+                <ul class="navbar-nav mx-auto fw-bold gap-3 align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="danhsach.html">Room Listings</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="chuyenTrangDangTin(event)">Post Room</a></li>
+                    <li class="nav-item"><a class="nav-link" href="yeuthich.html">Favorites</a></li>
+                    <li class="nav-item"><a class="nav-link" href="hotro.html">Support</a></li>
+                </ul>
+                <div class="d-flex gap-2 align-items-center flex-nowrap">
+                    <div id="user-auth-zone" class="d-inline-flex gap-2 align-items-center text-nowrap">
+                        <a href="dangnhap.html" class="btn btn-outline-primary fw-bold px-4 btn-sm">Login</a>
+                        <a href="dangky.html" class="btn btn-primary fw-bold px-4 btn-sm active">Sign Up</a>
+                    </div>
+                    <button class="btn btn-light rounded-circle shadow-sm ms-2" id="darkModeToggle">
+                        <i class="fa-solid fa-moon" id="themeIcon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="py-5 min-vh-100 d-flex align-items-center bg-light flex-grow-1">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-5 col-md-8">
+                    <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                        <div class="card-body p-5">
+                            <div class="text-center mb-4">
+                                <h2 class="fw-bold text-primary">Sign Up</h2>
+                                <p class="text-muted">Create an account to join TroHD!</p>
+                            </div>
+                            <form id="formDangKy">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Username <span class="text-danger">*</span></label>
+                                    <input type="text" id="reg-username" class="form-control form-control-lg bg-light fs-6" placeholder="Enter username">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Full Name <span class="text-danger">*</span></label>
+                                    <input type="text" id="reg-fullname" class="form-control form-control-lg bg-light fs-6" placeholder="Enter full name">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Phone Number <span class="text-danger">*</span></label>
+                                    <input type="text" id="reg-phone" class="form-control form-control-lg bg-light fs-6" placeholder="Enter phone number">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Password <span class="text-danger">*</span></label>
+                                    <input type="password" id="mk1" class="form-control form-control-lg bg-light fs-6" placeholder="Enter password">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Confirm Password <span class="text-danger">*</span></label>
+                                    <input type="password" id="mk2" class="form-control form-control-lg bg-light fs-6" placeholder="Confirm password">
+                                    <div id="pass-error" class="text-danger small mt-2 fw-bold d-none"><i class="fa-solid fa-triangle-exclamation me-1"></i> Passwords do not match!</div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold">Role <span class="text-danger">*</span></label>
+                                    <div class="d-flex gap-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="roleAccount" id="roleSV" value="SINH_VIEN" checked>
+                                            <label class="form-check-label" for="roleSV">Student</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="roleAccount" id="roleChu" value="CHU_TRO">
+                                            <label class="form-check-label" for="roleChu">Landlord</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4 form-check">
+                                    <input type="checkbox" class="form-check-input" id="terms">
+                                    <label class="form-check-label text-muted small" for="terms">I agree to the Terms & Policies.</label>
+                                </div>
+
+                                <button type="button" id="btnDangKySubmit" class="btn btn-primary w-100 btn-lg fw-bold rounded-pill mb-4" onclick="xuLyDangKy()">Sign Up</button>
+                                
+                                <div class="text-center text-muted small">
+                                    Already have an account? <a href="dangnhap.html" class="text-primary fw-bold text-decoration-none">Login</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-white py-4 mt-auto border-top text-center">
+        <div class="container">
+            <p class="text-muted small mb-0">© 2026 Developed by Tran Van Duc. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div class="modal fade" id="modalDangKy" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow">
+                <div class="modal-body text-center p-5">
+                    <div class="text-success mb-4"><i class="fa-solid fa-circle-check" style="font-size: 5rem;"></i></div>
+                    <h3 class="fw-bold mb-3">Sign Up Successful!</h3>
+                    <p class="text-muted mb-4">Your account has been created successfully.</p>
+                    <a href="dangnhap.html" class="btn btn-primary rounded-pill px-5 fw-bold">Go to Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

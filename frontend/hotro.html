@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TroHD - Support</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 45px;
+            height: 45px;
+            background: rgba(13, 110, 253, 0.8);
+            backdrop-filter: blur(5px);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .back-to-top:hover {
+            background: rgba(13, 110, 253, 1);
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html"><img src="images/logo.png" alt="TroHD" height="40"></a>
+            <div class="navbar-collapse">
+                <ul class="navbar-nav mx-auto fw-bold gap-3 align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="danhsach.html">Room Listings</a></li>
+                    <li class="nav-item"><a class="nav-link" href="dangtin.html">Post Room</a></li>
+                    <li class="nav-item d-none" id="nav-quan-ly-phong"><a class="nav-link" href="quanliphong.html">Management</a></li>
+                    <li class="nav-item"><a class="nav-link" href="yeuthich.html">Favorites</a></li>
+                    <li class="nav-item"><a class="nav-link active text-primary" href="hotro.html">Support</a></li>
+                </ul>
+                <div class="d-flex gap-3 align-items-center flex-nowrap">
+                    <div id="user-auth-zone" class="d-inline-flex gap-2 align-items-center text-nowrap">
+                        <a href="dangnhap.html" class="btn btn-outline-primary fw-bold px-4 btn-sm">Login</a>
+                        <a href="dangky.html" class="btn btn-primary fw-bold px-4 btn-sm">Sign Up</a>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn btn-light rounded-circle shadow-sm position-relative" id="dropdownNotification" data-bs-toggle="dropdown" aria-expanded="false" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;" title="Notifications">
+                            <i class="fa-regular fa-bell text-dark"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none" id="badge-thong-bao" style="font-size: 0.65rem;">0</span>
+                        </button>
+                    </div>
+                    <button class="btn btn-light rounded-circle shadow-sm" id="darkModeToggle" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;" title="Dark/Light Mode">
+                        <i class="fa-solid fa-moon" id="themeIcon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="py-5 bg-light flex-grow-1">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold text-primary">TroHD Support Center</h2>
+                <p class="text-muted">We are always ready to answer your questions.</p>
+            </div>
+
+            <div class="row g-5">
+                <div class="col-lg-6">
+                    <h4 class="fw-bold mb-4">Frequently Asked Questions (FAQ)</h4>
+                    <div class="accordion shadow-sm" id="faqAccordion">
+                        
+                        <div class="accordion-item border-0 mb-3 rounded-3 overflow-hidden">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                    1. How can I avoid rental deposit scams?
+                                </button>
+                            </h2>
+                            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body text-muted">
+                                    Absolutely <b>DO NOT</b> transfer any deposit before viewing the room in person, meeting the landlord, and carefully reading the rental agreement. If you notice any suspicious signs, report it immediately to the TroHD system admin.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item border-0 mb-3 rounded-3 overflow-hidden">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                    2. Are there any brokerage fees when renting through TroHD?
+                                </button>
+                            </h2>
+                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body text-muted">
+                                    Absolutely <b>NOT</b>. Our platform is 100% free for students. You communicate and make payments directly with the landlord, with no middlemen or brokers involved.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item border-0 mb-3 rounded-3 overflow-hidden">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                    3. How do I save rooms that I like?
+                                </button>
+                            </h2>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body text-muted">
+                                    Simply click the <b><i class="fa-solid fa-heart text-danger"></i> (Heart)</b> icon located on each room's image. The room will automatically be saved to your <b>"Favorites"</b> section on the menu for easy access later.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item border-0 mb-3 rounded-3 overflow-hidden">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                    4. For Landlords: How long does it take for a listing to be approved?
+                                </button>
+                            </h2>
+                            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body text-muted">
+                                    System admins manually review listings to ensure quality. Typically, your listing will be approved within 15 - 30 minutes during business hours. Once approved, the system will send you a <b>Notification (Bell icon)</b>.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item border-0 mb-3 rounded-3 overflow-hidden">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                    5. For Landlords: Why was my listing rejected?
+                                </button>
+                            </h2>
+                            <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body text-muted">
+                                    Listings are usually rejected due to: blurry or copied images, unreasonable pricing, inappropriate language, or unclear addresses. Please review and update your information accurately.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="bg-white p-4 rounded-4 shadow-sm border">
+                        <h4 class="fw-bold mb-4">Submit a Support Request</h4>
+                        <form id="supportForm">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Full Name <span class="text-danger">*</span></label>
+                                <input type="text" id="support-name" class="form-control bg-light" placeholder="Enter your full name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Email or Phone Number <span class="text-danger">*</span></label>
+                                <input type="text" id="support-contact" class="form-control bg-light" placeholder="So we can contact you back" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label fw-bold">What issue are you experiencing? <span class="text-danger">*</span></label>
+                                <textarea id="support-content" class="form-control bg-light" rows="4" placeholder="Describe the issue in detail (UI bugs, reporting a scam, need help posting...)" required></textarea>
+                            </div>
+                            <button type="button" id="btn-submit-support" class="btn btn-primary w-100 fw-bold py-3 shadow-sm rounded-pill" onclick="submitSupportTicket(event)">
+                                <i class="fa-solid fa-paper-plane me-2"></i>Submit Request
+                            </button>                        
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal fade" id="modalHoTro" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow">
+                <div class="modal-body text-center p-5">
+                    <div class="text-success mb-4">
+                        <i class="fa-solid fa-circle-check" style="font-size: 5rem;"></i>
+                    </div>
+                    <h3 class="fw-bold mb-3">Request Submitted!</h3>
+                    <p class="text-muted mb-4">The TroHD admin team has received your information and will contact you as soon as possible.</p>
+                    <button type="button" class="btn btn-primary fw-bold rounded-pill px-5 py-2" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-white py-5 mt-auto border-top">
+        <div class="container text-center text-muted small">
+            © 2026 Developed by Tran Van Duc. All rights reserved.
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

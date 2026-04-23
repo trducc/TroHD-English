@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Listings - TroHD</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .notification-dropdown {
+            width: 320px;
+            max-height: 450px;
+            overflow-y: auto;
+            border: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            padding: 0;
+        }
+        .notification-item:hover {
+            background-color: #f8f9fa;
+        }
+        #badge-thong-bao {
+            font-size: 0.65rem;
+            padding: 0.25em 0.45em;
+        }
+    </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    <nav class="navbar navbar-expand bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="images/logo.png" alt="TroHD" height="40">
+            </a>
+            
+            <div class="navbar-collapse">
+                <ul class="navbar-nav mx-auto fw-bold gap-3 align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active text-primary" href="danhsach.html">Room Listings</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="chuyenTrangDangTin(event)">Post Room</a></li>
+                    <li class="nav-item d-none" id="nav-quan-ly-phong">
+        <a class="nav-link" href="quanliphong.html">Management</a>
+    </li>
+                    <li class="nav-item"><a class="nav-link" href="yeuthich.html">Favorites</a></li>
+                    <li class="nav-item"><a class="nav-link" href="hotro.html">Support</a></li>
+                </ul>
+                
+                <div class="d-flex gap-3 align-items-center flex-nowrap">
+                    <div id="user-auth-zone" class="d-inline-flex gap-2 align-items-center text-nowrap">
+                        <a href="dangnhap.html" class="btn btn-outline-primary fw-bold px-4 btn-sm">Login</a>
+                        <a href="dangky.html" class="btn btn-primary fw-bold px-4 btn-sm">Sign Up</a>
+                    </div>
+                    
+                    <div class="dropdown">
+                        <button class="btn btn-light rounded-circle shadow-sm position-relative" 
+                                id="dropdownNotification" data-bs-toggle="dropdown" aria-expanded="false" 
+                                style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;" title="Notifications">
+                            <i class="fa-regular fa-bell text-dark"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none" id="badge-thong-bao">
+                                0
+                            </span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end notification-dropdown rounded-4 border-0 mt-2">
+                            <li><h6 class="dropdown-header fw-bold text-dark fs-6 py-3 border-bottom">Notifications</h6></li>
+                            <div id="noi-dung-thong-bao">
+                                <li class="text-center py-4 text-muted small">Loading notifications...</li>
+                            </div>
+                            <li><hr class="dropdown-divider m-0"></li>
+                            <li><a class="dropdown-item text-center small text-primary fw-bold py-2" href="#">View All</a></li>
+                        </ul>
+                    </div>
+
+                    <button class="btn btn-light rounded-circle shadow-sm" id="darkModeToggle" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;" title="Dark/Light Mode">
+                        <i class="fa-solid fa-moon" id="themeIcon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="py-5 bg-light min-vh-100 flex-grow-1">
+        <div class="container">
+            <div class="mb-5">
+                <h1 class="fw-bold mb-2">Available Room Rentals</h1>
+                <p class="text-muted">1000+ rooms are waiting for you!</p>
+            </div>
+
+            <div class="row g-4" id="khung-danh-sach">
+                <div class="col-12 text-center py-5">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2 text-muted fw-bold">Loading room list...</p>
+                </div>
+            </div> 
+
+            <nav aria-label="Page navigation" class="mt-5">
+                <ul class="pagination justify-content-center" id="cum-nut-phan-trang">
+                    </ul>
+            </nav>
+        </div> 
+    </section>
+
+    <footer class="bg-white py-5 mt-auto border-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <a class="navbar-brand fw-bold fs-3 text-primary mb-3 d-block" href="index.html">
+                        <img src="images/logo.png" alt="TroHD" height="35">
+                    </a>
+                    <p class="text-muted">The #1 rental search system in Ha Dong District for students.</p>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h5 class="fw-bold mb-3">About TroHD</h5>
+                    <ul class="list-unstyled text-muted">
+                        <li class="mb-2"><a href="#" class="text-decoration-none text-muted">About Us</a></li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none text-muted">News</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="fw-bold mb-3">Support</h5>
+                    <ul class="list-unstyled text-muted">
+                        <li class="mb-2"><a href="#" class="text-decoration-none text-muted">User Guide</a></li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none text-muted">Regulations</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="fw-bold mb-3">Contact</h5>
+                    <p class="text-muted mb-1 fw-bold"><i class="fa-solid fa-phone me-2"></i>0366604516</p>
+                    <p class="text-muted"><i class="fa-solid fa-envelope me-2"></i>tranduc2911k5@gmail.com</p>
+                </div>
+            </div>
+            <div class="text-center pt-4 border-top mt-4 text-muted small">
+                © 2026 Developed by Tran Van Duc. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal fade" id="modalYeuCauDangNhap" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow">
+                <div class="modal-header border-0">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center p-4">
+                    <div class="mb-3 text-warning"><i class="fa-solid fa-lock" style="font-size: 4rem;"></i></div>
+                    <h5 class="mb-4 text-dark fw-bold">Please login to continue.</h5>
+                    <a href="dangnhap.html" class="btn btn-primary w-100 mb-3 text-white fw-bold rounded-pill">Login</a>
+                    <p class="mb-2 text-muted">Don't have an account? <a href="dangky.html" class="text-primary fw-bold text-decoration-none">Sign up now</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TroHD - Room Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .notification-dropdown { width: 320px; max-height: 450px; overflow-y: auto; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 0; }
+        .comment-avatar { width: 45px; height: 45px; object-fit: cover; border-radius: 50%; }
+        #btn-goi-ngay { transition: transform 0.2s; }
+        #btn-goi-ngay:hover { transform: scale(1.05); }
+        /* Style cho ngôi sao */
+        .star-rating-display { color: #ffc107; font-size: 1.1rem; }
+        .star-input { cursor: pointer; color: #ddd; transition: 0.2s; font-size: 1.8rem; }
+        .star-input.active { color: #ffc107; }
+        #vung-sao-trung-binh-top { min-width: 140px; }
+        .btn-copy-sdt { width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; }
+    </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html"><img src="images/logo.png" alt="TroHD" height="40"></a>
+            <div class="navbar-collapse">
+                <ul class="navbar-nav mx-auto fw-bold gap-3 align-items-center" id="navbar-links-zone">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active text-primary" href="danhsach.html">Room Listings</a></li>
+                    <li class="nav-item" id="nav-dang-tin"><a class="nav-link" href="#" onclick="chuyenTrangDangTin(event)">Post Room</a></li>
+                    <li class="nav-item d-none" id="nav-quan-ly-phong"><a class="nav-link" href="quanliphong.html">Management</a></li>
+                    <li class="nav-item" id="nav-yeu-thich"><a class="nav-link" href="yeuthich.html">Favorites</a></li>
+                    <li class="nav-item"><a class="nav-link" href="hotro.html">Support</a></li>
+                </ul>
+                <div id="user-auth-zone" class="d-inline-flex gap-2 align-items-center"></div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-7">
+                    <div class="mb-4 d-flex justify-content-between align-items-start">
+                        <div>
+                            <h2 id="chi-tiet-tieu-de" class="fw-bold text-dark mb-2" style="font-size: 2.5rem;">Loading...</h2>
+                            <div class="d-flex align-items-center text-muted mb-2">
+                                <i class="fa-solid fa-location-dot text-danger fs-4 me-2"></i>
+                                <h4 id="chi-tiet-dia-chi" class="mb-0 fs-4 fw-medium text-dark">...</h4>
+                            </div>
+                            <div class="d-flex align-items-center text-muted">
+                                <i class="fa-solid fa-school text-primary fs-4 me-2"></i>
+                                <h5 id="chi-tiet-truong" class="mb-0 fs-4 fw-medium">...</h5>
+                            </div>
+                        </div>
+                        <div id="vung-sao-trung-binh-top" class="text-center p-3 rounded-4 bg-white shadow-sm border"></div>
+                    </div>
+                    
+                    <div id="carouselPhongTro" class="carousel slide mb-4 shadow-sm rounded-4 overflow-hidden" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselPhongTro" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#carouselPhongTro" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#carouselPhongTro" data-bs-slide-to="2"></button>
+    </div>
+
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img id="chi-tiet-anh" src="images/phong1.jpg" class="d-block w-100" style="height: 450px; object-fit: cover;">
+        </div>
+        <div class="carousel-item">
+            <img src="images/phong2.jpg" class="d-block w-100" style="height: 450px; object-fit: cover;">
+        </div>
+        <div class="carousel-item">
+            <img src="images/phong3.jpg" class="d-block w-100" style="height: 450px; object-fit: cover;">
+        </div>
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselPhongTro" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselPhongTro" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    </button>
+</div>
+
+                    <div class="bg-white p-4 rounded-4 shadow-sm border mb-4">
+                        <h4 class="fw-bold mb-3"><i class="fa-solid fa-location-dot text-danger me-2"></i>Prime Location:</h4>
+                        <p id="mo-ta-vi-tri" class="text-muted fs-5">...</p>
+                        <hr>
+                        <div class="d-flex align-items-center justify-content-between mt-4 bg-light p-4 rounded-4 border">
+                            <div>
+                                <p class="mb-1 text-muted small fw-bold">CONTACT LANDLORD</p>
+                                <div class="d-flex align-items-center">
+                                    <h2 id="chi-tiet-sdt" class="fw-bold text-primary mb-0 me-3">...</h2>
+                                    <button class="btn btn-white btn-copy-sdt rounded-circle shadow-sm border" onclick="copySDT()" title="Copy Phone Number">
+                                        <i class="fa-regular fa-copy"></i>
+                                    </button>
+                                </div>
+                            </div>
+                           <div class="d-flex gap-2 align-items-center">
+    <a href="#" id="btn-goi-ngay" class="btn btn-primary btn-lg rounded-pill px-4 fw-bold shadow d-flex align-items-center justify-content-center" style="height: 55px; min-width: 130px;">
+        <i class="fa-solid fa-phone-volume me-2"></i> Call
+    </a>
+
+    <button class="btn btn-success btn-lg rounded-pill px-4 fw-bold shadow-sm d-flex align-items-center justify-content-center" onclick="moModalDatLich()" style="height: 55px; min-width: 130px;">
+        <i class="fa-regular fa-calendar-check me-2"></i> Schedule
+    </button>
+</div>
+                        </div>
+
+                        <div class="modal fade" id="modalDatLichHen" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 border-0 shadow">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="fw-bold text-success mb-0"><i class="fa-regular fa-calendar-days me-2"></i>Pick a Date & Time (AM/PM)</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="mb-3">
+                    <label class="form-label small fw-bold text-muted text-uppercase">Choose Date</label>
+                    <input type="date" id="hen-ngay" class="form-control rounded-3 shadow-sm py-2">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small fw-bold text-muted text-uppercase">Choose Time (AM/PM)</label>
+                    <input type="time" id="hen-gio" class="form-control rounded-3 shadow-sm py-2">
+                </div>
+                <p class="small text-muted mb-0 fst-italic">Note: Landlord will receive a notification (AM/PM format) about your request.</p>
+            </div>
+            <div class="modal-footer border-0 pt-0">
+                <button class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Cancel</button>
+                <button class="btn btn-success rounded-pill px-4 fw-bold" onclick="xacNhanDatLich()">Confirm Booking</button>
+            </div>
+        </div>
+    </div>
+</div>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-4 shadow-sm border">
+                        <h4 class="fw-bold mb-4 text-primary border-bottom pb-3">Reviews & Ratings</h4>
+                        <div class="mb-4 bg-light p-3 rounded-4 border">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <span class="fw-bold text-muted small">YOUR RATING:</span>
+                                <div id="star-rating-input" class="d-flex gap-1 text-warning">
+                                    <i class="fa-solid fa-star star-input" data-value="1"></i>
+                                    <i class="fa-solid fa-star star-input" data-value="2"></i>
+                                    <i class="fa-solid fa-star star-input" data-value="3"></i>
+                                    <i class="fa-solid fa-star star-input" data-value="4"></i>
+                                    <i class="fa-solid fa-star star-input active" data-value="5"></i>
+                                </div>
+                                <span id="star-text" class="badge bg-warning text-dark fw-bold">5.0</span>
+                            </div>
+                            <textarea class="form-control bg-white border-0 py-3 shadow-sm mb-3" id="noiDungBinhLuan" rows="3" placeholder="Share your experience..."></textarea>
+                            <div class="text-end"><button class="btn btn-primary fw-bold rounded-pill px-4" id="btnGuiBinhLuan" onclick="guiBinhLuan()">Post Review</button></div>
+                        </div>
+                        <div id="danh-sach-binh-luan"></div>
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="bg-white p-4 rounded-4 shadow-sm border sticky-top" style="top: 100px;">
+                        <h3 class="fw-bold text-primary mb-4 border-bottom pb-3">Detailed Information</h3>
+                        <h2 id="chi-tiet-gia" class="text-primary fw-bold mb-3">...</h2>
+                        <span class="badge bg-light text-dark border px-3 py-2 mb-4 fs-6 fw-normal"><i class="fa-solid fa-ruler-combined me-2 text-primary"></i>Area: <span id="chi-tiet-dien-tich">...</span>m²</span>
+                        
+                        <ul class="list-unstyled d-flex flex-column gap-3 mb-4">
+                            <li><i class="fa-solid fa-bolt text-warning me-3"></i>Electricity: <span id="gia-dien" class="fw-bold text-dark">...</span></li>
+                            <li><i class="fa-solid fa-droplet text-info me-3"></i>Water: <span id="gia-nuoc" class="fw-bold text-dark">...</span></li>
+                            <li><i class="fa-solid fa-broom text-secondary me-3"></i>Services: <span id="gia-dich-vu" class="fw-bold text-dark">...</span></li>
+                        </ul>
+                        
+                        <hr>
+                        <h5 class="fw-bold mb-3">Amenities</h5>
+                        <ul id="danh-sach-tien-ich" class="list-unstyled d-flex flex-column gap-3 mb-4 fw-medium text-secondary"></ul>
+                        
+                        <hr>
+                        <h5 class="fw-bold mb-3"><i class="fa-solid fa-map-location-dot text-success me-2"></i>Location Map</h5>
+                        <div class="rounded-4 overflow-hidden border shadow-sm" style="height: 250px;">
+                            <iframe id="ban-do-iframe" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen loading="lazy"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-white py-4 mt-auto border-top text-center text-muted small"><div class="container">© 2026 Developed by Tran Van Đức.</div></footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TroHD - Post Room</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .notification-dropdown { width: 320px; max-height: 450px; overflow-y: auto; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.15); padding: 0; }
+        #badge-thong-bao { font-size: 0.65rem; padding: 0.25em 0.45em; }
+        
+        input[type="file"]::file-selector-button {
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-right: 15px;
+            transition: 0.2s;
+        }
+        input[type="file"]::file-selector-button:hover { background-color: #0b5ed7; }
+        input[type="file"] { color: transparent; } /* Giấu tiếng Việt của trình duyệt */
+    </style>
+</head>                                                                                                 
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+    <nav class="navbar navbar-expand bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="images/logo.png" alt="TroHD" height="40">
+            </a>
+            <div class="navbar-collapse">
+                <ul class="navbar-nav mx-auto fw-bold gap-3 align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="danhsach.html">Room Listings</a></li>
+                    <li class="nav-item"><a class="nav-link active text-primary" href="#" onclick="chuyenTrangDangTin(event)">Post Room</a></li>
+                    <li class="nav-item" id="nav-quan-ly-phong"><a class="nav-link" href="quanliphong.html">Management</a></li>
+                    <li class="nav-item"><a class="nav-link" href="yeuthich.html">Favorites</a></li>
+                    <li class="nav-item"><a class="nav-link" href="hotro.html">Support</a></li>
+                </ul>
+                <div class="d-flex gap-3 align-items-center flex-nowrap">
+                    <div id="user-auth-zone" class="d-inline-flex gap-2 align-items-center text-nowrap"></div>
+                    
+                    <div class="dropdown">
+                        <button class="btn btn-light rounded-circle shadow-sm position-relative" id="dropdownNotification" data-bs-toggle="dropdown" aria-expanded="false" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                            <i class="fa-regular fa-bell text-dark"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger border border-light d-none" id="badge-thong-bao">0</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end notification-dropdown rounded-4 border-0 mt-2">
+                            <li><h6 class="dropdown-header fw-bold text-dark fs-6 py-3 border-bottom">Notifications</h6></li>
+                            <div id="noi-dung-thong-bao">
+                                <li class="text-center py-4 text-muted small">Loading notifications...</li>
+                            </div>
+                        </ul>
+                    </div>
+
+                    <button class="btn btn-light rounded-circle shadow-sm" id="darkModeToggle" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fa-solid fa-moon" id="themeIcon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="py-5 flex-grow-1">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    
+                    <div class="bg-white p-5 rounded-top-4 shadow-sm border border-bottom-0">
+                        <h2 class="fw-bold mb-2 text-primary">Create a New Listing</h2>
+                        <p class="text-muted mb-0">Fill in all details below to reach students quickly.</p>
+                    </div>
+
+                    <div class="bg-white px-5 pb-5 rounded-bottom-4 shadow-sm border border-top-0">
+                        <form id="formDangTin">
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold small">Listing Title <span class="text-danger">*</span></label>
+                                    <input type="text" id="dt-tieuDe" class="form-control rounded-3" placeholder="E.g: Beautiful studio apartment...">
+                                </div>
+                                <div class="col-md-6 mt-3 mt-md-0">
+                                    <label class="form-label fw-bold small">Detailed Address <span class="text-danger">*</span></label>
+                                    <input type="text" id="dt-diaChi" class="form-control rounded-3" placeholder="No. 12 Ba Trieu Street, Quang Trung">
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold small">Monthly Rent (Million VND) <span class="text-danger">*</span></label>
+                                    <input type="number" id="dt-giaTien" class="form-control rounded-3" placeholder="4.5">
+                                </div>
+                                <div class="col-md-6 mt-3 mt-md-0">
+                                    <label class="form-label fw-bold small">Area (m²) <span class="text-danger">*</span></label>
+                                    <input type="number" id="dt-dienTich" class="form-control rounded-3" placeholder="40">
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+    <div class="col-md-4">
+        <label class="form-label fw-bold small">Electric (VND/kWh)</label>
+        <input type="text" id="dt-giaDien" class="form-control rounded-3" placeholder="4k">
+    </div>
+    <div class="col-md-4 mt-3 mt-md-0">
+        <label class="form-label fw-bold small">Water Price</label>
+        <input type="text" id="dt-giaNuoc" class="form-control rounded-3" placeholder="100k/person">
+    </div>
+    <div class="col-md-4 mt-3 mt-md-0">
+        <label class="form-label fw-bold small">Service Fee</label> <input type="text" id="dt-giaDichVu" class="form-control rounded-3" placeholder="50k/room">
+    </div>
+</div>
+
+                            <div class="row mb-4">
+                                <div class="col-md-4 mt-3 mt-md-0">
+                                    <label class="form-label fw-bold small">Nearby University <span class="text-danger">*</span></label>
+                                    <select class="form-select rounded-3" id="dt-ganTruong">
+                                        <option value="" selected>-- Select University --</option>
+                                        <option value="PTIT">Posts and Telecommunications Institute of Technology (PTIT)</option>
+                                        <option value="HAU">Hanoi Architectural University (HAU)</option>
+                                        <option value="ANND">People's Security Academy</option>
+                                        <option value="YDHCT">Vietnam University of Traditional Medicine</option>
+                                        <option value="HVQY">Vietnam Military Medical Academy</option>
+                                        <option value="Phenikaa">Phenikaa University</option>
+                                        <option value="DaiNam">Dai Nam University</option>
+                                        <option value="MoHaNoi">Hanoi Open University</option>
+                                        <option value="CMC">CMC University</option>
+                                        <option value="KiemSat">Hanoi Prosecutor University</option>
+                                        <option value="YTeHaDong">Ha Dong Medical College</option>
+                                        <option value="SPNTTW">National University of Art Education</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <h6 class="fw-bold mb-3 border-bottom pb-2">Available Amenities</h6>
+                            <div class="row g-3 mb-5">
+                                <div class="col-6 col-md-4"><div class="form-check"><input class="form-check-input" type="checkbox" id="dt-chungchu"><label class="form-check-label small fw-medium">Private Entrance</label></div></div>
+                                <div class="col-6 col-md-4"><div class="form-check"><input class="form-check-input" type="checkbox" id="dt-vesinh"><label class="form-check-label small fw-medium">Private Bathroom</label></div></div>
+                                <div class="col-6 col-md-4"><div class="form-check"><input class="form-check-input" type="checkbox" id="dt-nauan"><label class="form-check-label small fw-medium">Kitchen Area</label></div></div>
+                                <div class="col-6 col-md-4"><div class="form-check"><input class="form-check-input" type="checkbox" id="dt-dieuhoa"><label class="form-check-label small fw-medium">Air Conditioning</label></div></div>
+                                <div class="col-6 col-md-4"><div class="form-check"><input class="form-check-input" type="checkbox" id="dt-nonglanh"><label class="form-check-label small fw-medium">Water Heater</label></div></div>
+                                <div class="col-6 col-md-4"><div class="form-check"><input class="form-check-input" type="checkbox" id="dt-bancong"><label class="form-check-label small fw-medium">Balcony</label></div></div>
+                                <div class="col-6 col-md-4"><div class="form-check"><input class="form-check-input" type="checkbox" id="dt-dexe"><label class="form-check-label small fw-medium">Parking Space</label></div></div>
+                                <div class="col-6 col-md-4"><div class="form-check"><input class="form-check-input" type="checkbox" id="dt-vantay"><label class="form-check-label small fw-medium">Fingerprint Lock</label></div></div>
+                                <div class="col-6 col-md-4"><div class="form-check"><input class="form-check-input" type="checkbox" id="dt-maygiat"><label class="form-check-label small fw-medium">Shared Washing Machine</label></div></div>
+                            </div>
+
+                            <div class="mb-5 p-4 bg-light rounded-3 border border-dashed text-center">
+                                <label for="dt-roomImages" class="form-label fw-bold d-block text-start">Room Images (Max 5) *</label>
+                                <input class="form-control mb-2" type="file" id="dt-roomImages" accept="image/*" multiple
+                                    onchange="var txt = document.getElementById('file-text'); if(this.files.length > 0) { txt.innerText = this.files[0].name + (this.files.length > 1 ? ' (+' + (this.files.length - 1) + ' more)' : ''); txt.classList.replace('text-muted', 'text-primary'); txt.classList.replace('fst-italic', 'fw-bold'); } else { txt.innerText = 'No file chosen'; txt.classList.replace('text-primary', 'text-muted'); txt.classList.replace('fw-bold', 'fst-italic'); }">
+                                <small id="file-text" class="text-muted d-block fst-italic text-start">No file chosen</small>
+                                <small class="text-danger mt-2 d-block small text-start"><i class="fa-solid fa-circle-info me-1"></i>The first image will automatically be set as the featured thumbnail.</small>
+                            </div>
+                            
+                            <button type="button" class="btn btn-primary btn-lg w-100 fw-bold py-3 shadow-sm rounded-pill" onclick="xuLyDangTin()">
+                                <i class="fa-solid fa-paper-plane me-2"></i>Post Listing Now
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-white py-4 mt-auto border-top text-center text-muted small">
+        <div class="container">© 2026 Developed by Tran Van Duc. All rights reserved.</div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

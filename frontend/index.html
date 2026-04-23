@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TroHD - Find Your Perfect Stay</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="images/logo.png" alt="TroHD" height="40">
+            </a>
+            <div class="navbar-collapse">
+                <ul class="navbar-nav mx-auto fw-bold gap-3 align-items-center">
+                    <li class="nav-item"><a class="nav-link active text-primary" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="danhsach.html">Room Listings</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="chuyenTrangDangTin(event)">Post Room</a></li>
+                    <li class="nav-item d-none" id="nav-quan-ly-phong"><a class="nav-link" href="quanliphong.html">Management</a></li>
+                    <li class="nav-item"><a class="nav-link" href="yeuthich.html">Favorites</a></li>
+                    <li class="nav-item"><a class="nav-link" href="hotro.html">Support</a></li>
+                </ul>
+                <div class="d-flex gap-3 align-items-center flex-nowrap">
+                    <div id="user-auth-zone" class="d-inline-flex gap-2 align-items-center text-nowrap">
+                        <a href="dangnhap.html" class="btn btn-outline-primary fw-bold px-4 btn-sm">Login</a>
+                        <a href="dangky.html" class="btn btn-primary fw-bold px-4 btn-sm">Sign Up</a>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn btn-light rounded-circle shadow-sm position-relative" id="dropdownNotification" data-bs-toggle="dropdown" aria-expanded="false" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;" title="Notifications">
+                            <i class="fa-regular fa-bell text-dark"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger border border-light d-none" id="badge-thong-bao">0</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end notification-dropdown rounded-4 border-0 mt-2">
+                            <li><h6 class="dropdown-header fw-bold text-dark fs-6 py-3 border-bottom">Notifications</h6></li>
+                            <div id="noi-dung-thong-bao">
+                                <li class="text-center py-4 text-muted small">Loading notifications...</li>
+                            </div>
+                            <li><hr class="dropdown-divider m-0"></li>
+                            <li><a class="dropdown-item text-center small text-primary fw-bold py-2" href="#">View All</a></li>
+                        </ul>
+                    </div>
+                    <button class="btn btn-light rounded-circle shadow-sm" id="darkModeToggle" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;" title="Dark/Light Mode">
+                        <i class="fa-solid fa-moon" id="themeIcon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="py-5 bg-white">
+        <div class="position-absolute top-0 start-0 bg-primary rounded-circle" style="width: 50vw; height: 50vw; opacity: 0.05; filter: blur(80px); top: -10%; left: -10%; pointer-events: none;"></div>
+<div class="position-absolute bottom-0 end-0 bg-info rounded-circle" style="width: 40vw; height: 40vw; opacity: 0.05; filter: blur(80px); pointer-events: none;"></div>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-7 mb-4 mb-lg-0">
+                    <h1 class="display-6 fw-bold text-dark mb-3">
+                        Find Your Perfect Stay in <span class="text-primary">Ha Dong</span>
+                    </h1>
+                    <p class="text-secondary mb-4">Transparent Listings – Daily Updates – 100% Free</p>
+                    <div class="d-flex gap-5 mb-5">
+                        <div>
+                            <h3 class="fw-bold text-primary mb-0">5000+</h3>
+                            <span class="text-muted">students</span>
+                        </div>
+                        <div>
+                            <h3 class="fw-bold text-primary mb-0">1000+</h3>
+                            <span class="text-muted">rentals available</span>
+                        </div>
+                    </div>
+                    <div class="p-4 rounded-4 shadow-lg search-box-modern">
+                        <div class="mb-3 border-bottom pb-2 d-inline-block">
+                            <span class="text-primary fw-bold fs-5 border-bottom border-2 border-primary pb-2">Find the perfect rental for your needs</span>
+                        </div>
+                        <div class="row g-2 align-items-end">
+                            <div class="col-md-4">
+                                <label class="small fw-bold text-muted mb-1">University</label>
+                               <select id="filter-truong" class="form-select border-0 bg-transparent shadow-none fw-bold text-dark px-0" style="font-size: 1.1rem; cursor: pointer;">
+                                    <option selected>All Universities</option>
+                                    <option>Posts and Telecommunications Institute of Technology</option>
+                                    <option>Hanoi Architectural University</option>
+                                    <option>People's Security Academy</option>
+                                    <option>Viet Nam University of Traditional Medicine</option>
+                                    <option>Vietnam Military Medical Academy</option>
+                                    <option>Phenikaa University</option>
+                                    <option>Dai Nam University</option>
+                                    <option>Hanoi Open University</option>
+                                    <option>CMC University</option>
+                                    <option>Hanoi Procuracy University</option>
+                                    <option>Ha Dong Medical College</option>
+                                    <option>National University of Art Education</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="small fw-bold text-muted mb-1">Area</label>
+                                <select id="filter-khu-vuc" class="form-select border-0 bg-transparent shadow-none fw-bold text-dark px-0" style="font-size: 1.1rem; cursor: pointer;">
+                                    <option>All Areas</option>
+                                    <option>Mo Lao</option>
+                                    <option>Van Quan</option>
+                                    <option>Phung Khoang</option>
+                                    <option>Phuc La</option>
+                                    <option>Quang Trung</option>
+                                    <option>Duong Noi</option>
+                                    <option>Yen Nghia</option>
+                                    <option>Phu Lam</option>
+                                    <option>Kien Hung</option>
+                                    <option>Phu La</option>
+                                    <option>Van Phuc</option>
+                                    <option>Ha Cau</option>
+                                    <option>Ba La</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="small fw-bold text-muted mb-1">Price Range</label>
+                                <select class="form-select border-0 bg-transparent shadow-none fw-bold text-dark" id="filter-gia">
+                                    <option value="0" selected>All Prices</option>
+                                    <option value="0-1499999">Under 1.5M</option>
+                                    <option value="1500000-1999999">1.5M - Under 2M</option>
+                                    <option value="2000000-2499999">2M - Under 2.5M</option>
+                                    <option value="2500000-2999999">2.5M - Under 3M</option>
+                                    <option value="3000000-3499999">3M - Under 3.5M</option>
+                                    <option value="3500000-3999999">3.5M - Under 4M</option>
+                                    <option value="4000000-4499999">4M - Under 4.5M</option>
+                                    <option value="4500000-99999999">4.5M and above</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 d-flex align-items-stretch">
+    <button id="btn-tim-kiem" class="btn btn-primary w-100 fw-bold rounded-4 shadow-sm d-flex align-items-center justify-content-center" style="font-size: 1.1rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
+        <i class="fa-solid fa-magnifying-glass me-2"></i>Search
+    </button>
+</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 text-center">
+                    <img src="images/anhtrangchu.jpg" class="img-fluid rounded-5 shadow-lg" alt="Hero Banner" style="max-height: 500px; object-fit: cover;">
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="py-5 bg-light border-top border-bottom">
+    <div class="container text-center">
+        <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-bold mb-3">PROCESS</span>
+        <h2 class="fw-bold text-dark mb-5">How It Works</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 p-4 step-card shadow-sm">
+                    <div class="step-icon bg-primary-soft text-primary">
+                        <i class="fa-solid fa-search"></i>
+                    </div>
+                    <h5 class="fw-bold mb-3">1. Search Room</h5>
+                    <p class="text-muted small px-3">Filter by university and price range to find your match.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 p-4 step-card shadow-sm">
+                    <div class="step-icon bg-success-soft text-success">
+                        <i class="fa-solid fa-calendar-check"></i>
+                    </div>
+                    <h5 class="fw-bold mb-3">2. Schedule Viewing</h5>
+                    <p class="text-muted small px-3">Book a time with the landlord instantly through TroHD.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 p-4 step-card shadow-sm">
+                    <div class="step-icon bg-warning-soft text-warning">
+                        <i class="fa-solid fa-house-chimney-user"></i>
+                    </div>
+                    <h5 class="fw-bold mb-3">3. Move In</h5>
+                    <p class="text-muted small px-3">Sign the contract and enjoy your new perfect stay!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+    <section class="py-5" id="section-vip" >
+    <div class="container">
+        <div class="vip-section shadow-sm">
+            <h2 class="fw-bold mb-4"><i class="fa-solid fa-crown vip-badge-icon me-2"></i>Featured VIP Rooms</h2>
+            <div class="row g-4" id="vung-phong-vip">
+                </div>
+        </div>
+    </div>
+</section>
+
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-end mb-4">
+                <div>
+                    <h2 class="fw-bold mb-0">Featured Rooms 🔥</h2>
+                    <p class="text-muted mb-0">Contact the host now! <i class="fa-solid fa-phone text-primary"></i></p>
+                </div>
+                <a href="danhsach.html" class="btn btn-outline-primary fw-bold rounded-pill px-4">
+                    View All <i class="fa-solid fa-arrow-right ms-1"></i>
+                </a>
+            </div>
+            <div class="row g-4" id="khung-top-noi-bat">
+                <div class="text-center py-5">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2 text-muted">Loading rooms...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-white py-5 mt-auto border-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <a class="navbar-brand fw-bold fs-3 text-primary mb-3 d-block" href="#">
+                        <img src="images/logo.png" alt="TroHD" height="35">
+                    </a>
+                    <p class="text-muted">The #1 rental search system in Ha Dong District for students.</p>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h5 class="fw-bold mb-3">About TroHD</h5>
+                    <ul class="list-unstyled text-muted">
+                        <li class="mb-2"><a href="#" class="text-decoration-none text-muted">Introduction</a></li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none text-muted">News</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="fw-bold mb-3">Support</h5>
+                    <ul class="list-unstyled text-muted">
+                        <li class="mb-2"><a href="#" class="text-decoration-none text-muted">User Guide</a></li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none text-muted">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="fw-bold mb-3">Contact</h5>
+                    <p class="text-muted mb-1 fw-bold"><i class="fa-solid fa-phone me-2"></i>0366604516</p>
+                    <p class="text-muted"><i class="fa-solid fa-envelope me-2"></i>tranduc2911k5@gmail.com</p>
+                </div>
+            </div>
+            <div class="text-center pt-4 border-top mt-4 text-muted small">
+                © 2026 Developed by Tran Van Duc. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal fade" id="modalYeuCauDangNhap" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <h5 class="mb-4 text-dark">Please login to continue.</h5>
+                    <a href="dangnhap.html" class="btn btn-primary w-100 mb-3 text-white fw-bold">Login</a>
+                    <p class="mb-2">Don't have an account? <a href="dangky.html" class="text-primary fw-bold text-decoration-none">Sign up now</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Gọi API lấy riêng danh sách phòng VIP
+        fetch('http://localhost:9091/api/phong-vip')
+        .then(res => res.json())
+        .then(data => {
+            if (data && data.length > 0) {
+                // Nếu có phòng VIP thì mới hiện cái Section lên
+                document.getElementById('section-vip').style.display = 'block';
+                document.getElementById('vung-phong-vip').innerHTML = data.map(p => taoThePhong(p)).join('');
+            }
+        }).catch(err => console.log("Chưa có phòng VIP nào được duyệt."));
+    });
+    
+</script>
+<div class="ai-widget-container">
+    <div class="ai-chat-box shadow-lg rounded-4 border overflow-hidden" id="aiSearchBox">
+        <div class="p-3 d-flex justify-content-between align-items-center" style="background-color: #0a2540; color: white;">
+            <h6 class="mb-0 fw-bold"><i class="fa-solid fa-robot me-2"></i>AI Smart Search</h6>
+            <button class="btn-close btn-close-white" onclick="document.getElementById('aiSearchBox').classList.remove('show')" style="font-size: 0.8rem;"></button>
+        </div>
+        <div class="p-3" style="height: 320px; overflow-y: auto; background-color: #f8f9fa;" id="aiChatHistory">
+            <div class="text-start mb-3">
+                <div class="ai-message-bot shadow-sm">
+                    Hello! I'm your AI Assistant. 🪄 <br><br>
+                    Tell me what kind of room you are looking for in Ha Dong? 
+                    <hr class="my-2 text-muted">
+                    <span class="text-muted" style="font-size: 0.8rem;">Try: "Find me a room under 2 million near PTIT with AC."</span>
+                </div>
+            </div>
+        </div>
+        <div class="p-3 border-top" style="background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px);">
+            <div class="input-group p-1 bg-white border shadow-sm" style="border-radius: 50px;">
+                <input type="text" class="form-control border-0 shadow-none ps-4 bg-transparent" placeholder="Ask AI..." id="aiChatInput" style="font-weight: 500; font-size: 1.05rem;">
+                <button id="btnGuiAI" class="btn btn-primary rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 46px; height: 46px; transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);">
+                    <i class="fa-solid fa-paper-plane fs-5"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="ai-widget-trigger">
+        <div class="ai-tooltip" onclick="document.getElementById('aiSearchBox').classList.toggle('show')">
+            <i class="fa-solid fa-sparkles text-warning me-1"></i> AI Smart Search
+        </div>
+        <button class="btn rounded-circle ai-btn-navy" onclick="document.getElementById('aiSearchBox').classList.toggle('show')">
+            <i class="fa-solid fa-house-user"></i> 
+        </button>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

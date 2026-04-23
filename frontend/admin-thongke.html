@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Analytics & Statistics</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root { --admin-navy: #031331; --admin-blue: #0d6efd; }
+        body { background-color: #f0f2f5; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .admin-sidebar { width: 260px; height: 100vh; position: fixed; left: 0; top: 0; background: var(--admin-navy); display: flex; flex-direction: column; z-index: 1000; }
+        .admin-content { margin-left: 260px; padding: 2rem; min-height: 100vh; }
+        .nav-link { color: rgba(255,255,255,0.7); border-radius: 10px; margin: 5px 15px; padding: 12px 20px; transition: 0.3s; }
+        .nav-link:hover { background: rgba(255,255,255,0.1); color: white; }
+        .nav-link.active-menu { background: var(--admin-blue) !important; color: white !important; font-weight: bold; }
+        .chart-card { background: white; padding: 25px; border-radius: 20px; shadow-sm; border: none; height: 100%; }
+        .stat-card { border: none; border-radius: 15px; transition: 0.3s; }
+        .stat-card:hover { transform: translateY(-5px); }
+        .chart-container-donut { position: relative; height: 280px; width: 100%; }
+        /* Tìm và dán đè đoạn này để trị dứt điểm lỗi lệch */
+.chart-container-donut {
+    position: relative;
+    height: 280px;
+    width: 100%;
+    display: flex; /* Dùng Flexbox để làm móng */
+    justify-content: center;
+    align-items: center;
+}
+
+.chart-center-text {
+    position: absolute;
+    /* Không dùng top/left % nữa mà để Flexbox của cha nó tự cân */
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.chart-center-text span {
+    display: block;
+    margin: 0 !important; /* Triệt tiêu mọi margin mặc định */
+    padding: 0;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #6c757d;
+    line-height: 1; /* Cố định chiều cao dòng */
+}
+
+.chart-center-text h3 {
+    margin: 5px 0 0 0 !important; /* Chỉ để margin top 5px cho cách cái chữ bên trên */
+    padding: 0;
+    font-size: 2rem;
+    font-weight: 800;
+    color: #333;
+    line-height: 1;
+}
+    </style>
+</head>
+<body>
+
+    <div class="admin-sidebar shadow">
+        <div class="p-4 border-bottom border-secondary border-opacity-25 text-center">
+            <h4 class="fw-bold mb-0 text-info"><i class="fa-solid fa-user-shield me-2"></i>Admin Panel</h4>
+        </div>
+        <ul class="nav flex-column py-3 flex-grow-1">
+            <li class="nav-item">
+                <a class="nav-link text-white opacity-75 hover-menu d-flex justify-content-between align-items-center" href="admin.html">
+                    <span><i class="fa-solid fa-house-chimney me-3"></i>Manage Listings</span>
+                    <span class="badge bg-danger rounded-pill d-none" id="badge-duyet-bai">0</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white opacity-75 hover-menu d-flex justify-content-between align-items-center" href="admin-hotro.html">
+                    <span><i class="fa-solid fa-headset me-3"></i>Support Tickets</span>
+                    <span class="badge bg-danger rounded-pill d-none" id="badge-hotro">0</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white opacity-75 hover-menu" href="admin-nguoidung.html">
+                    <i class="fa-solid fa-users me-3"></i>Users
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active-menu" href="admin-thongke.html">
+                    <i class="fa-solid fa-chart-pie me-3"></i>Statistics
+                </a>
+            </li>
+        </ul>
+        
+        <div class="p-4 border-top border-secondary border-opacity-25">
+            <a href="index.html" class="btn btn-outline-info w-100 fw-bold rounded-pill mb-3">
+                <i class="fa-solid fa-earth-americas me-2"></i>Back to Home
+            </a>
+            <button class="btn btn-outline-danger w-100 fw-bold rounded-pill" onclick="xacNhanDangXuat()">
+                <i class="fa-solid fa-right-from-bracket me-2"></i>Logout
+            </button>
+        </div>
+    </div>
+
+    <div class="admin-content">
+        <nav class="navbar bg-white shadow-sm px-4 py-3 mb-4 rounded-4 d-flex justify-content-between align-items-center">
+            <h5 class="fw-bold mb-0 text-dark">Analytics & Statistics System</h5>
+            <div class="d-flex align-items-center gap-3">
+                <div class="text-end d-none d-md-block">
+                    <div class="fw-bold text-dark lh-1">Hello, Admin</div>
+                    <small class="text-muted small">System Data</small>
+                </div>
+                <img src="https://ui-avatars.com/api/?name=Admin&background=031331&color=fff" class="rounded-circle shadow-sm" width="45">
+            </div>
+        </nav>
+
+        <div class="row g-4 mb-4">
+            <div class="col-md-4">
+                <div class="card stat-card bg-primary text-white p-4 shadow-sm">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-1 opacity-75 small fw-bold text-uppercase">Total Accounts</h6>
+                            <h2 class="fw-bold mb-0" id="stat-user">0</h2>
+                        </div>
+                        <div class="bg-white bg-opacity-10 p-3 rounded-circle"><i class="fa-solid fa-users fs-3"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card stat-card bg-success text-white p-4 shadow-sm">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-1 opacity-75 small fw-bold text-uppercase">Total Rooms</h6>
+                            <h2 class="fw-bold mb-0" id="stat-phong">0</h2>
+                        </div>
+                        <div class="bg-white bg-opacity-10 p-3 rounded-circle"><i class="fa-solid fa-house-circle-check fs-3"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card stat-card bg-info text-white p-4 shadow-sm">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-1 opacity-75 small fw-bold text-uppercase text-white">Total Views</h6>
+                            <h2 class="fw-bold mb-0" id="stat-view">0</h2>
+                        </div>
+                        <div class="bg-white bg-opacity-10 p-3 rounded-circle"><i class="fa-solid fa-eye fs-3"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="chart-card shadow-sm">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="fw-bold mb-0 text-dark"><i class="fa-solid fa-chart-bar text-primary me-2"></i>Most Viewed Rooms</h5>
+                        <button class="btn btn-sm btn-light rounded-pill px-3 fw-bold" onclick="khoiTaoBieuDo()">
+                            <i class="fa-solid fa-rotate me-1"></i> Reload
+                        </button>
+                    </div>
+                    <div style="height: 320px;">
+                        <canvas id="chartTopPhong"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="chart-card shadow-sm">
+                    <h5 class="fw-bold mb-4 text-center text-dark">User Distribution</h5>
+                    <div class="chart-container-donut">
+                        <canvas id="chartNguoiDung"></canvas>
+                        <div class="chart-center-text">
+                            <span class="text-muted small fw-bold text-uppercase d-block">Accounts</span>
+                            <h3 id="totalUserCenter">0</h3>
+                        </div>
+                    </div>
+                    <div class="mt-4 border-top pt-3">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="small text-muted fw-bold"><i class="fa-solid fa-circle text-primary me-1"></i> Landlords</span>
+                            <span class="small fw-bold" id="label-chu-tro">0</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span class="small text-muted fw-bold"><i class="fa-solid fa-circle text-success me-1"></i> Students</span>
+                            <span class="small fw-bold" id="label-sinh-vien">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
